@@ -4,5 +4,6 @@
     <string name="username">Usuario</string>
     <string name="password">Senha</string>
     <string name="login">Acessar</string>
+    <string name="auth_error">Erro de autenticação</string>
 
 </resources>
