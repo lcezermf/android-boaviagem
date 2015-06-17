@@ -1,5 +1,8 @@
 <resources>
 
     <string name="app_name">MyTravel</string>
+    <string name="username">Usuario</string>
+    <string name="password">Senha</string>
+    <string name="login">Acessar</string>
 
 </resources>
