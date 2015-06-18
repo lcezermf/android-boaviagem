@@ -11,7 +11,7 @@
         android:text="@string/username"
         />
 	<EditText 
-	    android:id="@+id/user"
+	    android:id="@+id/username"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:inputType="text">
@@ -30,5 +30,13 @@
 	    android:inputType="textPassword">
 	    <requestFocus />
 	</EditText>
+	
+	<Button 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="bottom"
+	    android:onClick="login"
+	    android:text="@string/login"
+	    />
 	
 </LinearLayout>
