@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#333333"
+    android:orientation="vertical">
+    
+    
+    <TextView 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#015488"
+        >
+        
+        <TextView
+            android:id="@+id/new_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="80dp"
+            android:clickable="true"
+            android:onClick="selectOption"
+            android:text="@string/new_payment"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/new_travel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/new_payment"
+            android:layout_marginRight="50dp"
+            android:clickable="true"
+            android:onClick="selectOption"
+            android:text="@string/new_travel"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/my_travels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/new_payment"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="120dp"
+            android:clickable="true"
+            android:onClick="selectOption"
+            android:text="@string/my_travels"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/configurations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/my_travels"
+            android:layout_alignRight="@id/new_travel"
+            android:clickable="true"
+            android:onClick="selectOption"
+            android:text="@string/configurations"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+        
+    </RelativeLayout>
+
+</LinearLayout>
