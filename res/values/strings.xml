@@ -5,5 +5,9 @@
     <string name="password">Senha</string>
     <string name="login">Acessar</string>
     <string name="auth_error">Erro de autenticação</string>
-
+    <string name="new_payment">Novo Gasto</string>
+    <string name="my_travels">Minhas Viagens</string>
+	<string name="new_travel">Nova Viagem</string>
+	<string name="configurations">Configurações</string>
+	
 </resources>
