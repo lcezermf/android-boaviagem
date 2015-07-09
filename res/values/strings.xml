@@ -9,5 +9,16 @@
     <string name="my_travels">Minhas Viagens</string>
 	<string name="new_travel">Nova Viagem</string>
 	<string name="configurations">Configurações</string>
+	<string name="destiny">Destino</string>
+	<string name="travel_kind">Tipo da Viagem</string>
+	<string name="leisure">Lazer</string>
+	<string name="business">Negócios</string>
+	<string name="date_start">Data da Saída</string>
+	<string name="date_finish">Data da Chegada</string>
+	<string name="date_select">Selecione a data</string>
+	<string name="budget">Orçamento</string>
+	<string name="people_quantity">Quantidade de Pessoas</string>
+	<string name="create_new_travel">Criar nova Viagem</string>
+	
 	
 </resources>
