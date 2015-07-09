@@ -1,6 +1,7 @@
 package io.github.lccezinha.mytravel;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -15,9 +16,12 @@ public class DashboardActivity extends Activity {
 	}
 	
 	public void selectOption(View view){
-		TextView textView = (TextView) view;
-		String option = "Opção: " + textView.getText().toString();
-		Toast.makeText(this, option, Toast.LENGTH_LONG).show();
+		System.out.print(view.getId());
+		switch(view.getId()){
+		case R.id.new_travel:
+			startActivity(new Intent(this, TravelActivity.class));
+			break;
+		}
 	}
 	
 }
