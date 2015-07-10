@@ -16,10 +16,15 @@ public class DashboardActivity extends Activity {
 	}
 	
 	public void selectOption(View view){
-		System.out.print(view.getId());
+		
 		switch(view.getId()){
+		
 		case R.id.new_travel:
 			startActivity(new Intent(this, TravelActivity.class));
+			break;
+			
+		case R.id.new_spent:
+			startActivity(new Intent(this, SpentActivity.class));
 			break;
 		}
 	}
