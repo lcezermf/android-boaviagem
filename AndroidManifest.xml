@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".DashboardActivity"></activity>
         <activity android:name=".TravelActivity"></activity>
+        <activity android:name=".SpentActivity"></activity>
     </application>
 
 </manifest>

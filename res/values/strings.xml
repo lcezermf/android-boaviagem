@@ -5,7 +5,6 @@
     <string name="password">Senha</string>
     <string name="login">Acessar</string>
     <string name="auth_error">Erro de autenticação</string>
-    <string name="new_payment">Novo Gasto</string>
     <string name="my_travels">Minhas Viagens</string>
 	<string name="new_travel">Nova Viagem</string>
 	<string name="configurations">Configurações</string>
@@ -16,9 +15,14 @@
 	<string name="date_start">Data da Saída</string>
 	<string name="date_finish">Data da Chegada</string>
 	<string name="date_select">Selecione a data</string>
+	<string name="create_new_travel">Criar nova Viagem</string>
 	<string name="budget">Orçamento</string>
 	<string name="people_quantity">Quantidade de Pessoas</string>
-	<string name="create_new_travel">Criar nova Viagem</string>
-	
-	
+	<string name="new_spent">Novo Gasto</string>
+	<string name="category">Categoria</string>
+	<string name="value">Valor</string>
+	<string name="spent_date">Data</string>
+	<string name="description">Descrição</string>
+	<string name="place">Local</string>
+	<string name="spent">Gasto</string>	
 </resources>

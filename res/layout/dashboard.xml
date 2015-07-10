@@ -21,14 +21,14 @@
         >
         
         <TextView
-            android:id="@+id/new_payment"
+            android:id="@+id/new_spent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="80dp"
             android:clickable="true"
             android:onClick="selectOption"
-            android:text="@string/new_payment"
+            android:text="@string/new_spent"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
         
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/new_payment"
+            android:layout_alignTop="@id/new_spent"
             android:layout_marginRight="50dp"
             android:clickable="true"
             android:onClick="selectOption"
@@ -49,7 +49,7 @@
             android:id="@+id/my_travels"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/new_payment"
+            android:layout_alignLeft="@id/new_spent"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="120dp"
             android:clickable="true"
