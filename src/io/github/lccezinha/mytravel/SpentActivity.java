@@ -8,13 +8,16 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 
 public class SpentActivity extends Activity {
 	
 	private int year, month, day;
 	private Button spentDate;
+	private Spinner category;
 	
 	@Override
 	public void onCreate(Bundle savedInstaceState){
@@ -29,7 +32,11 @@ public class SpentActivity extends Activity {
 		spentDate = (Button) findViewById(R.id.spent_date);
 		spentDate.setText(day + "/" + month + "/" + year);
 		
+		ArrayAdapter<CharSequence> adapter = 
+				ArrayAdapter.createFromResource(this, R.array.spent_categories, android.R.layout.simple_spinner_item);
 		
+		category = (Spinner) findViewById(R.id.category);
+		category.setAdapter(adapter);
 	}
 	
 	@SuppressWarnings("deprecation")

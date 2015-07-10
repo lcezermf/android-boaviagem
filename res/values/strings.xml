@@ -24,5 +24,13 @@
 	<string name="spent_date">Data</string>
 	<string name="description">Descrição</string>
 	<string name="place">Local</string>
-	<string name="spent">Gasto</string>	
+	<string name="spent">Gasto</string>
+	
+	<string-array name="spent_categories">
+	    <item>Alimentação</item>
+	    <item>Hospedagem</item>
+	    <item>Combustível</item>
+	    <item>Transporte</item>
+	    <item>Outros</item>
+	</string-array>	
 </resources>
