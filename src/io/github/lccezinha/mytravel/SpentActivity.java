@@ -28,6 +28,8 @@ public class SpentActivity extends Activity {
 		
 		spentDate = (Button) findViewById(R.id.spent_date);
 		spentDate.setText(day + "/" + month + "/" + year);
+		
+		
 	}
 	
 	@SuppressWarnings("deprecation")
