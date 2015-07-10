@@ -33,7 +33,11 @@ public class SpentActivity extends Activity {
 		spentDate.setText(day + "/" + month + "/" + year);
 		
 		ArrayAdapter<CharSequence> adapter = 
-				ArrayAdapter.createFromResource(this, R.array.spent_categories, android.R.layout.simple_spinner_item);
+				ArrayAdapter.createFromResource(
+					this, 
+					R.array.spent_categories, 
+					android.R.layout.simple_spinner_item
+				);
 		
 		category = (Spinner) findViewById(R.id.category);
 		category.setAdapter(adapter);
