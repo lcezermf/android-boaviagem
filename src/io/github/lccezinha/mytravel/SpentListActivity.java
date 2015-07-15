@@ -1,21 +1,17 @@
 package io.github.lccezinha.mytravel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +19,7 @@ public class SpentListActivity extends ListActivity implements
 		OnItemClickListener {
 
 	private List<Map<String, Object>> spents;
+	private String lastDate;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -32,6 +29,7 @@ public class SpentListActivity extends ListActivity implements
 		int[] to = { R.id.date, R.id.description, R.id.value, R.id.category };
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, listSpents(), R.layout.list_spent, from, to);
+		adapter.setViewBinder(new SpentViewBinder());
 		
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
@@ -67,12 +65,27 @@ public class SpentListActivity extends ListActivity implements
 		return spents;
 	}
 	
-	private class SpentViewBinder implements ViewBinder {
-		
-		public boolean setViewValue(View view, Object data, String textRepresentation) {
-			return false;
-		}
-		
-	}
+	private class SpentViewBinder implements ViewBinder{
 
+		@Override
+		public boolean setViewValue(View view, Object object, String textRepresentation) {
+			if(view.getId() == R.id.date){
+				if(!lastDate.equals(object)){
+					TextView textView = (TextView) view;
+					textView.setText(textRepresentation);
+					lastDate = textRepresentation;
+					view.setVisibility(View.VISIBLE);
+				}
+			
+				return true;
+			}
+			
+			if(view.getId() == R.id.category){
+				Integer id = (Integer) object;
+				view.setBackgroundColor(getResources().getColor(id));
+			}
+			
+			return false;			
+		}
+	}
 }
