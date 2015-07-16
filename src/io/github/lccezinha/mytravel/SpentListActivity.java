@@ -7,8 +7,13 @@ import java.util.Map;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
@@ -33,6 +38,8 @@ public class SpentListActivity extends ListActivity implements
 		
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
+		
+		registerForContextMenu(getListView());
 	}
 	
 	@Override
@@ -88,4 +95,25 @@ public class SpentListActivity extends ListActivity implements
 			return false;			
 		}
 	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.spent, menu);
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+
+		if (item.getItemId() == R.id.remove) {
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+			spents.remove(info.position);
+			getListView().invalidateViews();
+			lastDate = ""; 
+			// remover do banco de dados
+			return true;
+		}
+		return super.onContextItemSelected(item);
+	}
+
 }
