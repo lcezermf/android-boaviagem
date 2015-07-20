@@ -24,7 +24,7 @@ public class SpentListActivity extends ListActivity implements
 		OnItemClickListener {
 
 	private List<Map<String, Object>> spents;
-	private String lastDate;
+	private String lastDate = "";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -35,7 +35,6 @@ public class SpentListActivity extends ListActivity implements
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, listSpents(), R.layout.list_spent, from, to);
 		adapter.setViewBinder(new SpentViewBinder());
-		
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 		
@@ -69,27 +68,43 @@ public class SpentListActivity extends ListActivity implements
 		item.put("category", R.color.categoria_alimentacao);
 		spents.add(item);
 		
+		item = new HashMap<String, Object>();
+		item.put("date", "03/03/2013");
+		item.put("description", "Lanche");
+		item.put("value", "R$ 30.00");
+		item.put("category", R.color.categoria_alimentacao);
+		spents.add(item);
+		
+		item = new HashMap<String, Object>();
+		item.put("date", "05/03/2013");
+		item.put("description", "Lanche");
+		item.put("value", "R$ 15.00");
+		item.put("category", R.color.categoria_alimentacao);
+		spents.add(item);
+		
 		return spents;
 	}
 	
 	private class SpentViewBinder implements ViewBinder{
 
 		@Override
-		public boolean setViewValue(View view, Object object, String textRepresentation) {
+		public boolean setViewValue(View view, Object date, String textRepresentation) {
 			if(view.getId() == R.id.date){
-				if(!lastDate.equals(object)){
+				if(!lastDate.equals(date)){
 					TextView textView = (TextView) view;
 					textView.setText(textRepresentation);
 					lastDate = textRepresentation;
 					view.setVisibility(View.VISIBLE);
-				}
-			
+				}else{
+					view.setVisibility(View.GONE);
+				}			
 				return true;
 			}
 			
 			if(view.getId() == R.id.category){
-				Integer id = (Integer) object;
+				Integer id = (Integer) date;
 				view.setBackgroundColor(getResources().getColor(id));
+				return true;
 			}
 			
 			return false;			
