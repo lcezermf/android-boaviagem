@@ -27,13 +27,11 @@ public class TravelListActivity extends ListActivity implements
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-		String[] from = { "image", "destino", "data", "total" };
+		String[] from = { "image", "destiny", "date", "total" };
 		int[] to = { R.id.travelKind, R.id.destiny, R.id.date, R.id.value };
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, listTravels(), R.layout.list_travel, from, to);
-		
 		setListAdapter(adapter);
-		
 		getListView().setOnItemClickListener(this);
 	}
 
@@ -46,7 +44,6 @@ public class TravelListActivity extends ListActivity implements
 		String message = "Viagem Selecionada: " + destiny;
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 		startActivity(new Intent(this, SpentListActivity.class));
-		
 	}
 	
 	private List<Map<String, Object>> listTravels(){
@@ -55,14 +52,14 @@ public class TravelListActivity extends ListActivity implements
 		Map<String, Object> item = new HashMap<String, Object>();
 		item.put("image", R.drawable.negocios);
 		item.put("destiny", "São Paulo");
-		item.put("data", "02/02/2012 a 04/02/2012");
+		item.put("date", "02/02/2012 a 04/02/2012");
 		item.put("total", "Gasto total de R$: 313.21");
 		travels.add(item);
 		
 		item = new HashMap<String, Object>();
 		item.put("image", R.drawable.lazer);
 		item.put("destiny", "Joinville");
-		item.put("data", "03/03/2013 a 07/03/2013");
+		item.put("date", "03/03/2013 a 07/03/2013");
 		item.put("total", "Gasto total de R$: 555.12");
 		travels.add(item);
 		
