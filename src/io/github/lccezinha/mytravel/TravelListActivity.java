@@ -1,27 +1,28 @@
 package io.github.lccezinha.mytravel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class TravelListActivity extends ListActivity implements
-		OnItemClickListener {
+		OnItemClickListener, OnClickListener {
 	
 	private List<Map<String, Object>> travels;
+	private AlertDialog alertDialog;
+	private int selectedTravel;
+	private AlertDialog confirmationDialog;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -33,17 +34,15 @@ public class TravelListActivity extends ListActivity implements
 		SimpleAdapter adapter = new SimpleAdapter(this, listTravels(), R.layout.list_travel, from, to);
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
+		
+		this.alertDialog = createAlertDialogs();
+		this.confirmationDialog = createConfirmationDialog();
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		
-		Map<String, Object> map = travels.get(position);
-		String destiny = (String) map.get("destiny");
-		String message = "Viagem Selecionada: " + destiny;
-		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-		startActivity(new Intent(this, SpentListActivity.class));
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		selectedTravel = position;
+		alertDialog.show();
 	}
 	
 	private List<Map<String, Object>> listTravels(){
@@ -64,6 +63,59 @@ public class TravelListActivity extends ListActivity implements
 		travels.add(item);
 		
 		return travels;
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int item) {
+		switch (item) {
+		
+		case 0:
+			startActivity(new Intent(this, TravelActivity.class));
+			break;
+
+		case 1:
+			startActivity(new Intent(this, SpentActivity.class));
+			break;
+			
+		case 2:
+			startActivity(new Intent(this, SpentListActivity.class));
+			break;
+			
+		case 3:
+			confirmationDialog.show();
+			break;
+		case DialogInterface.BUTTON_POSITIVE:
+			travels.remove(this.selectedTravel);
+			getListView().invalidateViews();
+			break;
+		case DialogInterface.BUTTON_NEGATIVE:
+			confirmationDialog.dismiss();
+			break;
+		}		
+	}
+	
+	private AlertDialog createAlertDialogs(){
+		final CharSequence[] items = {
+				getString(R.string.edit),
+				getString(R.string.new_spent),
+				getString(R.string.spents_realized),
+				getString(R.string.remove)
+		};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.options);
+		builder.setItems(items, this);
+		
+		return builder.create();
+	}
+	
+	private AlertDialog createConfirmationDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.confirm_travel_delete);
+		builder.setPositiveButton(getString(R.string.yes), this);
+		builder.setNegativeButton(getString(R.string.no), this);
+		
+		return builder.create();
 	}
 
 }
