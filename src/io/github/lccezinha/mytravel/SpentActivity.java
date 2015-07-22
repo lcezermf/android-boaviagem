@@ -75,7 +75,7 @@ public class SpentActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.spent, menu);
+		inflater.inflate(R.menu.spent_menu, menu);
 		
 		return true;
 	}

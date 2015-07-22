@@ -17,7 +17,7 @@ public class TravelActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.travel, menu);
+		inflater.inflate(R.menu.travel_menu, menu);
 		
 		return true;
 	}

@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class DashboardActivity extends Activity {
 	
@@ -34,8 +32,9 @@ public class DashboardActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
+		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.dashboard, menu);
+		inflater.inflate(R.menu.dashboard_menu, menu);
 		
 		return true;
 	}

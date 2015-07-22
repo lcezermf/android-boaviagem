@@ -114,7 +114,7 @@ public class SpentListActivity extends ListActivity implements
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.spent, menu);
+		inflater.inflate(R.menu.spent_menu, menu);
 	}
 	
 	@Override
