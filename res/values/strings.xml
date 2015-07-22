@@ -25,6 +25,7 @@
 	<string name="description">Descrição</string>
 	<string name="place">Local</string>
 	<string name="spent">Gasto</string>
+	<string name="remove_spent">Remover Gasto</string>
 	
 	<string-array name="spent_categories">
 	    <item>Alimentação</item>
