@@ -27,6 +27,10 @@ public class DashboardActivity extends Activity {
 		case R.id.new_spent:
 			startActivity(new Intent(this, SpentActivity.class));
 			break;
+			
+		case R.id.my_travels:
+			startActivity(new Intent(this, TravelListActivity.class));
+			break;
 		}
 	}
 	
