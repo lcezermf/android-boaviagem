@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 
 public class TravelListActivity extends ListActivity implements
@@ -28,8 +29,8 @@ public class TravelListActivity extends ListActivity implements
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-		String[] from = { "image", "destiny", "date", "total" };
-		int[] to = { R.id.travelKind, R.id.destiny, R.id.date, R.id.value };
+		String[] from = { "image", "destiny", "date", "total", "valuesProgressBar" };
+		int[] to = { R.id.travelKind, R.id.destiny, R.id.date, R.id.value, R.id.valuesProgressBar };
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, listTravels(), R.layout.list_travel, from, to);
 		setListAdapter(adapter);
@@ -53,6 +54,7 @@ public class TravelListActivity extends ListActivity implements
 		item.put("destiny", "São Paulo");
 		item.put("date", "02/02/2012 a 04/02/2012");
 		item.put("total", "Gasto total de R$: 313.21");
+		item.put("valuesProgressBar", new Double[]{ 500.0, 450.0, 313.21 });
 		travels.add(item);
 		
 		item = new HashMap<String, Object>();
@@ -60,10 +62,23 @@ public class TravelListActivity extends ListActivity implements
 		item.put("destiny", "Joinville");
 		item.put("date", "03/03/2013 a 07/03/2013");
 		item.put("total", "Gasto total de R$: 555.12");
+		item.put("valuesProgressBar", new Double[]{ 750.0, 250.0, 555.12 });
 		travels.add(item);
 		
 		return travels;
 	}
+	
+	/*public boolean setViewValue(View view, Object data, String textRepresentation) {
+		if (view.getId() == R.id.valuesProgressBar) {
+			Double valores[] = (Double[]) data;
+			ProgressBar progressBar = (ProgressBar) view;
+			progressBar.setMax(valores[0].intValue());
+			progressBar.setSecondaryProgress(valores[1].intValue());
+			progressBar.setProgress(valores[2].intValue());
+			return true;
+		}
+		return false;
+	}*/
 
 	@Override
 	public void onClick(DialogInterface dialog, int item) {
