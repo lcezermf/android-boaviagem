@@ -17,7 +17,6 @@ public class LoginActivity extends Activity {
 	private EditText password;
 	private CheckBox keepConnected;
 	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);

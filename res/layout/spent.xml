@@ -35,8 +35,7 @@
             android:id="@+id/category"
             android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:prompt="@string/category"
-            />
+			android:prompt="@string/category" />
         
         <TableLayout
             android:layout_width="match_parent"
@@ -61,7 +60,7 @@
                     android:inputType="numberDecimal" />
                 
                 <Button
-					android:id="@+id/spent_date"
+					android:id="@+id/spentDate"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_gravity="center"

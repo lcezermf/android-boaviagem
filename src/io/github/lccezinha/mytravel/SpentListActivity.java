@@ -42,9 +42,7 @@ public class SpentListActivity extends ListActivity implements
 	}
 	
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Map<String, Object> map = spents.get(position);
 		String description = (String) map.get("description");
 		String message = "Gasto Selecionado: " + description;

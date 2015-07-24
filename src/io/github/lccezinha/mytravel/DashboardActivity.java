@@ -20,15 +20,15 @@ public class DashboardActivity extends Activity {
 		
 		switch(view.getId()){
 		
-		case R.id.new_travel:
+		case R.id.newTravel:
 			startActivity(new Intent(this, TravelActivity.class));
 			break;
 			
-		case R.id.new_spent:
+		case R.id.newSpent:
 			startActivity(new Intent(this, SpentActivity.class));
 			break;
 			
-		case R.id.my_travels:
+		case R.id.myTravels:
 			startActivity(new Intent(this, TravelListActivity.class));
 			break;
 			

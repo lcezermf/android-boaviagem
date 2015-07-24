@@ -25,7 +25,7 @@ public class TravelActivity extends Activity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.new_spent:
+		case R.id.newSpent:
 			startActivity(new Intent(this, SpentActivity.class));
 			return true;
 		case R.id.remove:

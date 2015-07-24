@@ -33,7 +33,7 @@ public class SpentActivity extends Activity {
 		month = calendar.get(Calendar.MONTH);
 		day   = calendar.get(Calendar.DAY_OF_MONTH);
 		
-		spentDate = (Button) findViewById(R.id.spent_date);
+		spentDate = (Button) findViewById(R.id.spentDate);
 		spentDate.setText(day + "/" + month + "/" + year);
 		
 		ArrayAdapter<CharSequence> adapter = 
@@ -54,7 +54,7 @@ public class SpentActivity extends Activity {
 	
 	@Override
 	protected Dialog onCreateDialog(int id){
-		if(R.id.spent_date == id){
+		if(R.id.spentDate == id){
 			return new DatePickerDialog(this, listener, year, month, day);
 		}
 		
