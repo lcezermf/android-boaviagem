@@ -1,4 +1,10 @@
-package io.github.lccezinha.mytravel;
+package io.github.lccezinha.mytravel.activities;
+
+import io.github.lccezinha.mytravel.R;
+import io.github.lccezinha.mytravel.R.color;
+import io.github.lccezinha.mytravel.R.id;
+import io.github.lccezinha.mytravel.R.layout;
+import io.github.lccezinha.mytravel.R.menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;

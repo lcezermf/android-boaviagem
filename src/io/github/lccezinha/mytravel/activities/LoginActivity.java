@@ -1,5 +1,9 @@
-package io.github.lccezinha.mytravel;
+package io.github.lccezinha.mytravel.activities;
 
+import io.github.lccezinha.mytravel.R;
+import io.github.lccezinha.mytravel.R.id;
+import io.github.lccezinha.mytravel.R.layout;
+import io.github.lccezinha.mytravel.R.string;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;

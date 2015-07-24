@@ -1,4 +1,10 @@
-package io.github.lccezinha.mytravel;
+package io.github.lccezinha.mytravel.activities;
+
+import io.github.lccezinha.mytravel.R;
+import io.github.lccezinha.mytravel.R.array;
+import io.github.lccezinha.mytravel.R.id;
+import io.github.lccezinha.mytravel.R.layout;
+import io.github.lccezinha.mytravel.R.menu;
 
 import java.util.Calendar;
 
