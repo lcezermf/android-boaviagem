@@ -33,6 +33,14 @@
 	<string name="spent">Gasto</string>
 	<string name="remove_spent">Remover Gasto</string>
 	
+	<string name="travel_mode_summary">Sumário de modo viagem</string>
+	<string name="travel_mode">Modo viagem</string>
+	<string name="limit_value">Valor limite</string>
+	<string name="limit_value_summary">Sumário para valor limite</string>
+	<string name="preferences">Preferências</string>
+	
+	<string name="keep_connected">Manter Conectado</string>
+	
 	<string-array name="spent_categories">
 	    <item>Alimentação</item>
 	    <item>Hospedagem</item>
