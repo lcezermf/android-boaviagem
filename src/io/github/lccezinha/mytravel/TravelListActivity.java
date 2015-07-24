@@ -16,9 +16,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleAdapter.ViewBinder;
 
 public class TravelListActivity extends ListActivity implements
-		OnItemClickListener, OnClickListener {
+		OnItemClickListener, OnClickListener, ViewBinder{
 	
 	private List<Map<String, Object>> travels;
 	private AlertDialog alertDialog;
@@ -33,6 +34,7 @@ public class TravelListActivity extends ListActivity implements
 		int[] to = { R.id.travelKind, R.id.destiny, R.id.date, R.id.value, R.id.valuesProgressBar };
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, listTravels(), R.layout.list_travel, from, to);
+		adapter.setViewBinder((ViewBinder) this);
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 		
@@ -67,18 +69,6 @@ public class TravelListActivity extends ListActivity implements
 		
 		return travels;
 	}
-	
-	/*public boolean setViewValue(View view, Object data, String textRepresentation) {
-		if (view.getId() == R.id.valuesProgressBar) {
-			Double valores[] = (Double[]) data;
-			ProgressBar progressBar = (ProgressBar) view;
-			progressBar.setMax(valores[0].intValue());
-			progressBar.setSecondaryProgress(valores[1].intValue());
-			progressBar.setProgress(valores[2].intValue());
-			return true;
-		}
-		return false;
-	}*/
 
 	@Override
 	public void onClick(DialogInterface dialog, int item) {
@@ -131,6 +121,19 @@ public class TravelListActivity extends ListActivity implements
 		builder.setNegativeButton(getString(R.string.no), this);
 		
 		return builder.create();
+	}
+
+	@Override
+	public boolean setViewValue(View view, Object data, String textRepresentation) {
+		if (view.getId() == R.id.valuesProgressBar) {
+			Double valores[] = (Double[]) data;
+			ProgressBar progressBar = (ProgressBar) view;
+			progressBar.setMax(valores[0].intValue());
+			progressBar.setSecondaryProgress(valores[1].intValue());
+			progressBar.setProgress(valores[2].intValue());
+			return true;
+		}
+		return false;
 	}
 
 }
