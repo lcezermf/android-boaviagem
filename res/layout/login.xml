@@ -31,12 +31,17 @@
 	    <requestFocus />
 	</EditText>
 	
+	<CheckBox 
+	    android:id="@+id/keepConnected"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/keep_connected" />
+	
 	<Button 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="bottom"
 	    android:onClick="login"
-	    android:text="@string/login"
-	    />
+	    android:text="@string/login" />
 	
 </LinearLayout>

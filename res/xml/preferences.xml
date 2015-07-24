@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <PreferenceCategory android:title="@string/preferences">        
+        <CheckBoxPreference
+            android:key="travel_mode"
+            android:summary="@string/travel_mode_summary"
+            android:title="@string/travel_mode" />
+        
+        <EditTextPreference 
+            android:dialogTitle="@string/limit_value"
+            android:key="limit_value"
+            android:defaultValue="80"
+            android:summary="@string/limit_value_summary"
+            android:title="@string/limit_value" />
+    </PreferenceCategory>
+    
+</PreferenceScreen>
