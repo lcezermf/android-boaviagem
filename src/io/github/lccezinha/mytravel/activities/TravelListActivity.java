@@ -96,18 +96,10 @@ public class TravelListActivity extends ListActivity implements
 			
 			item.put("destiny", destiny);
 			
-			Log.i("dateStart", "VALUE = " + dateStart);
-			Log.i("dateFinish", "VALUE = " + dateFinish);
-			
 			Date dateFinishDate = new Date(dateFinish);
 			Date dateStartDate = new Date(dateStart);
-			
-			Log.i("dateFinishDate", "VALUE = " + dateFinishDate);
-			Log.i("dateStartDate", "VALUE = " + dateStartDate);
-			
+		
 			String period = dateFormat.format(dateStartDate) + " a " + dateFormat.format(dateFinishDate);
-			
-			Log.i("period", "VALUE = " + period);
 			
 			item.put("date", period);
 			
@@ -130,10 +122,14 @@ public class TravelListActivity extends ListActivity implements
 
 	@Override
 	public void onClick(DialogInterface dialog, int item) {
-		switch (item) {
+		Intent intent;
+		String id = (String) travels.get(selectedTravel).get("id");
 		
+		switch (item) {
 		case 0:
-			startActivity(new Intent(this, TravelActivity.class));
+			intent = new Intent(this, TravelActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_ID, id);
+			startActivity(intent);
 			break;
 
 		case 1:

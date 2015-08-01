@@ -4,6 +4,7 @@ import io.github.lccezinha.mytravel.R;
 import io.github.lccezinha.mytravel.database.DataBaseHelper;
 import io.github.lccezinha.mytravel.utils.ConstantHelpers;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,6 +35,7 @@ public class TravelActivity extends Activity {
 	private DataBaseHelper dataBaseHelper;
 	private EditText destiny, peopleQuantity, budget;
 	private RadioGroup radioGroup;
+	private String travel_id;
 
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -41,6 +44,12 @@ public class TravelActivity extends Activity {
 		initializeCalendar();		
 		initializeViewComponents();
 		initializeDataBase();
+		
+		travel_id = getIntent().getStringExtra(ConstantHelpers.TRAVEL_ID);
+		
+		if(travel_id != null){
+			prepareEdit();
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -90,7 +99,13 @@ public class TravelActivity extends Activity {
 			values.put("travel_kind", ConstantHelpers.BUSINESS_TRAVEL);
 		}
 		
-		long result = db.insert("travels", null, values);
+		long result;
+		
+		if(travel_id == null){
+			result = db.insert("travels", null, values);
+		}else{
+			result = db.update("travels", values, "_id = ?", new String[]{ travel_id });
+		}
 		
 		if(result != -1){
 			Toast.makeText(this, getString(R.string.travel_create), Toast.LENGTH_LONG).show();
@@ -99,6 +114,36 @@ public class TravelActivity extends Activity {
 		}
 	}
 
+	private void prepareEdit(){
+		SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+		
+		Cursor cursor = db.rawQuery("SELECT TRAVEL_KIND, DESTINY, DATE_START, " +
+		"DATE_FINISH, PEOPLE_QUANTITY, BUDGET FROM travels WHERE _id = ?", new String[]{ travel_id } );
+		
+		cursor.moveToFirst();
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		if(cursor.getInt(0) == ConstantHelpers.LEISURE_TRAVEL){
+			radioGroup.check(R.id.leisure);
+		}else{
+			radioGroup.check(R.id.business);
+		}
+		
+		destiny.setText(cursor.getString(1));
+		
+		dateStart = new Date(cursor.getLong(2));
+		dateStartButton.setText(dateFormat.format(dateStart));
+		
+		dateFinish = new Date(cursor.getLong(3));
+		dateFinishButton.setText(dateFormat.format(dateFinish));
+		
+		peopleQuantity.setText(cursor.getString(4));
+		budget.setText(cursor.getString(5));
+		
+		cursor.close();
+	}
+	
 	@Override
 	protected void onDestroy(){
 		dataBaseHelper.close();
