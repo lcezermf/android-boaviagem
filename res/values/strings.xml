@@ -1,4 +1,7 @@
 <resources>
+    <string name="travel_create">Viagem Criada com sucesso!</string>
+    <string name="travel_create_error">Erro ao criar viagem :(</string>
+    
     <string name="confirm_travel_delete">Deseja excluir a viagem?</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>

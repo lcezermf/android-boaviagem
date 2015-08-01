@@ -1,12 +1,12 @@
 package io.github.lccezinha.mytravel.activities;
 
 import io.github.lccezinha.mytravel.R;
-import io.github.lccezinha.mytravel.R.drawable;
-import io.github.lccezinha.mytravel.R.id;
-import io.github.lccezinha.mytravel.R.layout;
-import io.github.lccezinha.mytravel.R.string;
+import io.github.lccezinha.mytravel.database.DataBaseHelper;
+import io.github.lccezinha.mytravel.utils.ConstantHelpers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,12 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,11 +36,18 @@ public class TravelListActivity extends ListActivity implements
 	private AlertDialog alertDialog;
 	private int selectedTravel;
 	private AlertDialog confirmationDialog;
+	private DataBaseHelper dataBaseHelper;
+	private SimpleDateFormat dateFormat;
+	private Double limitValue;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
+		initializeDataBase();
+		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		loadPreferences();
+			
 		String[] from = { "image", "destiny", "date", "total", "valuesProgressBar" };
 		int[] to = { R.id.travelKind, R.id.destiny, R.id.date, R.id.value, R.id.valuesProgressBar };
 		
@@ -55,33 +67,68 @@ public class TravelListActivity extends ListActivity implements
 	}
 	
 	private List<Map<String, Object>> listTravels(){
+		SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT _id, travel_kind, destiny, " + 
+							"date_finish, date_start, budget FROM travels", null);
+		
+		cursor.moveToFirst();
+				
 		travels = new ArrayList<Map<String, Object>>();
+
+		for(int i = 0; i < cursor.getCount(); i++){
+			Map<String, Object> item = new HashMap<String, Object>();
+			
+			String id = cursor.getString(0);
+			int travelKind = cursor.getInt(1);
+			String destiny = cursor.getString(2);
+			long dateFinish = cursor.getLong(3);
+			long dateStart = cursor.getLong(4);
+			double budget = cursor.getDouble(5);
+			
+			item.put("id", id);
+			
+			if(travelKind == ConstantHelpers.LEISURE_TRAVEL){
+				item.put("image", R.drawable.lazer);
+			}else{
+				item.put("image", R.drawable.negocios);
+			}
+			
+			item.put("destiny", destiny);
+			
+			Date dateFinishDate = new Date(dateFinish);
+			Date dateStartDate = new Date(dateStart);
 		
-		Map<String, Object> item = new HashMap<String, Object>();
-		item.put("image", R.drawable.negocios);
-		item.put("destiny", "São Paulo");
-		item.put("date", "02/02/2012 a 04/02/2012");
-		item.put("total", "Gasto total de R$: 313.21");
-		item.put("valuesProgressBar", new Double[]{ 500.0, 450.0, 313.21 });
-		travels.add(item);
-		
-		item = new HashMap<String, Object>();
-		item.put("image", R.drawable.lazer);
-		item.put("destiny", "Joinville");
-		item.put("date", "03/03/2013 a 07/03/2013");
-		item.put("total", "Gasto total de R$: 555.12");
-		item.put("valuesProgressBar", new Double[]{ 750.0, 250.0, 555.12 });
-		travels.add(item);
+			String period = dateFormat.format(dateStartDate) + " a " + dateFormat.format(dateFinishDate);
+			
+			item.put("date", period);
+			
+			double totalSpent = calculateTotalSpent(db, id);
+			item.put("total", "Gasto Total R$ " + totalSpent);
+			
+			double alert = budget * limitValue / 100;
+			Double [] values = new Double[] { budget, alert, totalSpent };
+			item.put("valuesProgressBar", values);
+			
+			travels.add(item);
+			
+			cursor.moveToNext();			
+		}
+		cursor.close();
+		dataBaseHelper.close();
 		
 		return travels;
 	}
 
 	@Override
 	public void onClick(DialogInterface dialog, int item) {
-		switch (item) {
+		Intent intent;
+		String id = (String) travels.get(selectedTravel).get("id");
 		
+		switch (item) {
 		case 0:
-			startActivity(new Intent(this, TravelActivity.class));
+			intent = new Intent(this, TravelActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_ID, id);
+			startActivity(intent);
 			break;
 
 		case 1:
@@ -97,6 +144,7 @@ public class TravelListActivity extends ListActivity implements
 			break;
 		case DialogInterface.BUTTON_POSITIVE:
 			travels.remove(this.selectedTravel);
+			deleteTravel(id);
 			getListView().invalidateViews();
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
@@ -140,6 +188,33 @@ public class TravelListActivity extends ListActivity implements
 			return true;
 		}
 		return false;
+	}
+	
+	private void initializeDataBase(){
+		dataBaseHelper = new DataBaseHelper(this);
+	}
+	
+	private void loadPreferences(){
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String value = preferences.getString("limitValue", "-1");
+		limitValue = Double.valueOf(value);
+	}
+	
+	private double calculateTotalSpent(SQLiteDatabase db, String id){
+		Cursor cursor = db.rawQuery("SELECT SUM(value) FROM spents WHERE travel_id = ?", new String[]{ id });
+		cursor.moveToFirst();
+		double total = cursor.getDouble(0);
+		cursor.close();
+		
+		return total;
+	}
+	
+	private void deleteTravel(String id){
+		SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+		
+		String where [] = new String[] { id };
+		db.delete("spents", "travel_id = ?", where);
+		db.delete("spents", "_id = ?", where);
 	}
 
 }
