@@ -58,7 +58,6 @@ public class TravelListActivity extends ListActivity implements
 		
 		this.alertDialog = createAlertDialogs();
 		this.confirmationDialog = createConfirmationDialog();
-		
 	}
 
 	@Override
@@ -145,6 +144,7 @@ public class TravelListActivity extends ListActivity implements
 			break;
 		case DialogInterface.BUTTON_POSITIVE:
 			travels.remove(this.selectedTravel);
+			deleteTravel(id);
 			getListView().invalidateViews();
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
@@ -207,6 +207,14 @@ public class TravelListActivity extends ListActivity implements
 		cursor.close();
 		
 		return total;
+	}
+	
+	private void deleteTravel(String id){
+		SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+		
+		String where [] = new String[] { id };
+		db.delete("spents", "travel_id = ?", where);
+		db.delete("spents", "_id = ?", where);
 	}
 
 }
