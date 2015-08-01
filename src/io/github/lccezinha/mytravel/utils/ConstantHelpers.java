@@ -1,6 +1,6 @@
 package io.github.lccezinha.mytravel.utils;
 
-public class ContantHelpers {
+public class ConstantHelpers {
 	public static final String TRAVEL_MODE = "travel_mode";
 	public static final String TRAVEL_ID = "travel_id";
 	public static final String TRAVEL_DESTINY = "travel_destiny";

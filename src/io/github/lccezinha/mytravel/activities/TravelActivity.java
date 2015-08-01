@@ -2,7 +2,7 @@ package io.github.lccezinha.mytravel.activities;
 
 import io.github.lccezinha.mytravel.R;
 import io.github.lccezinha.mytravel.database.DataBaseHelper;
-import io.github.lccezinha.mytravel.utils.ContantHelpers;
+import io.github.lccezinha.mytravel.utils.ConstantHelpers;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -85,9 +85,9 @@ public class TravelActivity extends Activity {
 		int kind = radioGroup.getCheckedRadioButtonId();
 		
 		if(kind == R.id.leisure){
-			values.put("travel_kind", ContantHelpers.LEISURE_TRAVEL);
+			values.put("travel_kind", ConstantHelpers.LEISURE_TRAVEL);
 		}else{
-			values.put("travel_kind", ContantHelpers.BUSINESS_TRAVEL);
+			values.put("travel_kind", ConstantHelpers.BUSINESS_TRAVEL);
 		}
 		
 		long result = db.insert("travels", null, values);
