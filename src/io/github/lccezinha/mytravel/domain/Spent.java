@@ -8,18 +8,20 @@ public class Spent {
 	private String category;
 	private String description;
 	private Double value;
+	private String place;
 	private Integer travelId;
 	
 	public Spent(){}
 	
 	public Spent(Long id, Date date, String category, String description,
-			Double value, Integer travelId) {
+			Double value, String place, Integer travelId) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.category = category;
 		this.description = description;
 		this.value = value;
+		this.setPlace(place);
 		this.travelId = travelId;
 	}
 
@@ -69,6 +71,14 @@ public class Spent {
 
 	public void setTravelId(Integer travelId) {
 		this.travelId = travelId;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
 	}
 	
 }

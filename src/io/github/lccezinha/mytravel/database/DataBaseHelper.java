@@ -26,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public static class Spent {
-		public static final String TABELA = "SPENTS";
+		public static final String TABLE = "SPENTS";
 		public static final String _ID = "_ID";
 		public static final String TRAVEL_ID = "TRAVEL_ID";
 		public static final String CATEGORY = "CATEGORY";
