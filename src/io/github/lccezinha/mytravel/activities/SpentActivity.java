@@ -28,13 +28,7 @@ public class SpentActivity extends Activity {
 		super.onCreate(savedInstaceState);
 		setContentView(R.layout.spent);
 		
-		Calendar calendar = Calendar.getInstance();
-		year  = calendar.get(Calendar.YEAR);
-		month = calendar.get(Calendar.MONTH);
-		day   = calendar.get(Calendar.DAY_OF_MONTH);
-		
-		spentDate = (Button) findViewById(R.id.spentDate);
-		spentDate.setText(day + "/" + month + "/" + year);
+		initializeCalendar();
 		
 		ArrayAdapter<CharSequence> adapter = 
 				ArrayAdapter.createFromResource(
@@ -84,6 +78,16 @@ public class SpentActivity extends Activity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		finish();
 		return true;
+	}
+	
+	private void initializeCalendar(){
+		Calendar calendar = Calendar.getInstance();
+		year  = calendar.get(Calendar.YEAR);
+		month = calendar.get(Calendar.MONTH);
+		day   = calendar.get(Calendar.DAY_OF_MONTH);
+		
+		spentDate = (Button) findViewById(R.id.spentDate);
+		spentDate.setText(day + "/" + month + "/" + year);
 	}
 	
 }
