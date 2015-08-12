@@ -31,6 +31,15 @@
         <activity android:name="io.github.lccezinha.mytravel.activities.SpentListActivity"></activity>
         <activity android:name="io.github.lccezinha.mytravel.activities.TravelListActivity"></activity>
         <activity android:name="io.github.lccezinha.mytravel.activities.ConfigurationActivity" />
+        
+        <provider 
+            android:name="io.github.lccezinha.mytravel.provider.MyTravelProvider"
+            android:authorities="io.github.lccezinha.mytravel.provider" >
+            <path-permission
+                android:path="travel"
+                android:permission="io.github.lccezinha.mytravel.provider.permission.ALL">
+            </path-permission>
+        </provider>
     </application>
 
 </manifest>
