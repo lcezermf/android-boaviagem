@@ -124,17 +124,24 @@ public class TravelListActivity extends ListActivity implements
 		String id = (String) travels.get(selectedTravel).get("id");
 		
 		switch (item) {
-		case 0:
+		case 0: // Editar Viagem
 			intent = new Intent(this, TravelActivity.class);
 			intent.putExtra(ConstantHelpers.TRAVEL_ID, id);
 			startActivity(intent);
 			break;
 
-		case 1:
-			startActivity(new Intent(this, SpentActivity.class));
+		case 1: // Novo gasto em uma viagem
+			String destiny = travels.get(selectedTravel).get("destiny").toString();
+			
+			intent = new Intent(this, SpentActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_DESTINY, id);
+			intent.putExtra(ConstantHelpers.TRAVEL_DESTINY, destiny);
+			startActivity(intent);
 			break;
 			
-		case 2:
+		case 2: //listar gastos realizados na viagem
+			intent = new Intent(this, SpentListActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_DESTINY, id);
 			startActivity(new Intent(this, SpentListActivity.class));
 			break;
 			

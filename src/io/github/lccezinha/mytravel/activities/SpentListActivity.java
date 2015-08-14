@@ -37,6 +37,7 @@ public class SpentListActivity extends ListActivity implements
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, listSpents(), R.layout.list_spent, from, to);
 		adapter.setViewBinder(new SpentViewBinder());
+		
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 		
