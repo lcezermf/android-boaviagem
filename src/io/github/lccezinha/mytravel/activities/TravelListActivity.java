@@ -1,6 +1,7 @@
 package io.github.lccezinha.mytravel.activities;
 
 import io.github.lccezinha.mytravel.R;
+import io.github.lccezinha.mytravel.dao.DAO;
 import io.github.lccezinha.mytravel.database.DataBaseHelper;
 import io.github.lccezinha.mytravel.utils.ConstantHelpers;
 
@@ -38,10 +39,12 @@ public class TravelListActivity extends ListActivity implements
 	private DataBaseHelper dataBaseHelper;
 	private SimpleDateFormat dateFormat;
 	private Double limitValue;
+	private DAO dao;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		dao = new DAO(this);
 		
 		initializeDataBase();
 		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -63,6 +66,60 @@ public class TravelListActivity extends ListActivity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		selectedTravel = position;
 		alertDialog.show();
+	}
+	
+	@Override
+	public void onClick(DialogInterface dialog, int item) {
+		Intent intent;
+		String id = (String) travels.get(selectedTravel).get("id");
+		
+		switch (item) {
+		case 0: // Editar Viagem
+			intent = new Intent(this, TravelActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_ID, id);
+			startActivity(intent);
+			break;
+
+		case 1: // Novo gasto em uma viagem
+			String destiny = travels.get(selectedTravel).get("destiny").toString();
+			
+			intent = new Intent(this, SpentActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_ID, id);
+			intent.putExtra(ConstantHelpers.TRAVEL_DESTINY, destiny);
+			startActivity(intent);
+			break;
+			
+		case 2: //listar gastos realizados na viagem
+			intent = new Intent(this, SpentListActivity.class);
+			intent.putExtra(ConstantHelpers.TRAVEL_DESTINY, id);
+			startActivity(new Intent(this, SpentListActivity.class));
+			break;
+			
+		case 3:
+			confirmationDialog.show();
+			break;
+		case DialogInterface.BUTTON_POSITIVE:
+			travels.remove(this.selectedTravel);
+			dao.removeTravel(Long.valueOf(id));
+			getListView().invalidateViews();
+			break;
+		case DialogInterface.BUTTON_NEGATIVE:
+			confirmationDialog.dismiss();
+			break;
+		}		
+	}
+	
+	@Override
+	public boolean setViewValue(View view, Object data, String textRepresentation) {
+		if (view.getId() == R.id.valuesProgressBar) {
+			Double valores[] = (Double[]) data;
+			ProgressBar progressBar = (ProgressBar) view;
+			progressBar.setMax(valores[0].intValue());
+			progressBar.setSecondaryProgress(valores[1].intValue());
+			progressBar.setProgress(valores[2].intValue());
+			return true;
+		}
+		return false;
 	}
 	
 	private List<Map<String, Object>> listTravels(){
@@ -117,40 +174,6 @@ public class TravelListActivity extends ListActivity implements
 		
 		return travels;
 	}
-
-	@Override
-	public void onClick(DialogInterface dialog, int item) {
-		Intent intent;
-		String id = (String) travels.get(selectedTravel).get("id");
-		
-		switch (item) {
-		case 0:
-			intent = new Intent(this, TravelActivity.class);
-			intent.putExtra(ConstantHelpers.TRAVEL_ID, id);
-			startActivity(intent);
-			break;
-
-		case 1:
-			startActivity(new Intent(this, SpentActivity.class));
-			break;
-			
-		case 2:
-			startActivity(new Intent(this, SpentListActivity.class));
-			break;
-			
-		case 3:
-			confirmationDialog.show();
-			break;
-		case DialogInterface.BUTTON_POSITIVE:
-			travels.remove(this.selectedTravel);
-			deleteTravel(id);
-			getListView().invalidateViews();
-			break;
-		case DialogInterface.BUTTON_NEGATIVE:
-			confirmationDialog.dismiss();
-			break;
-		}		
-	}
 	
 	private AlertDialog createAlertDialogs(){
 		final CharSequence[] items = {
@@ -176,19 +199,6 @@ public class TravelListActivity extends ListActivity implements
 		return builder.create();
 	}
 
-	@Override
-	public boolean setViewValue(View view, Object data, String textRepresentation) {
-		if (view.getId() == R.id.valuesProgressBar) {
-			Double valores[] = (Double[]) data;
-			ProgressBar progressBar = (ProgressBar) view;
-			progressBar.setMax(valores[0].intValue());
-			progressBar.setSecondaryProgress(valores[1].intValue());
-			progressBar.setProgress(valores[2].intValue());
-			return true;
-		}
-		return false;
-	}
-	
 	private void initializeDataBase(){
 		dataBaseHelper = new DataBaseHelper(this);
 	}
@@ -207,13 +217,4 @@ public class TravelListActivity extends ListActivity implements
 		
 		return total;
 	}
-	
-	private void deleteTravel(String id){
-		SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-		
-		String where [] = new String[] { id };
-		db.delete("spents", "travel_id = ?", where);
-		db.delete("spents", "_id = ?", where);
-	}
-
 }

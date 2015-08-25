@@ -76,11 +76,17 @@ public class DAO {
 		
 		return getDb().insert(DataBaseHelper.Travel.TABLE, null, values);
 	}
-	
+		
 	public boolean removeTravel(Long id){
 		String whereClause = DataBaseHelper.Travel._ID + " = ?";
 		String[] whereArgs = new String[]{ id.toString() };
 		int removed = getDb().delete(DataBaseHelper.Travel.TABLE, whereClause, whereArgs);
+		
+		if(removed > 0){
+			String whereClause_2 = DataBaseHelper.Spent.TRAVEL_ID + " = ?";
+			String[] whereArgs_2 = new String[]{ id.toString() };
+			getDb().delete(DataBaseHelper.Spent.TABLE, whereClause_2, whereArgs_2);
+		}
 		
 		return removed > 0;
 	}

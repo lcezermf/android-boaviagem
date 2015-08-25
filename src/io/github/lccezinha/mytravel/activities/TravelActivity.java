@@ -109,9 +109,14 @@ public class TravelActivity extends Activity {
 		
 		if(result != -1){
 			Toast.makeText(this, getString(R.string.travel_create), Toast.LENGTH_LONG).show();
+			goToTravelsList();
 		}else{
 			Toast.makeText(this, getString(R.string.travel_create_error), Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	private void goToTravelsList(){
+		startActivity(new Intent(this, TravelListActivity.class));
 	}
 
 	private void prepareEdit(){

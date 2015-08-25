@@ -1,13 +1,18 @@
 package io.github.lccezinha.mytravel.activities;
 
 import io.github.lccezinha.mytravel.R;
+import io.github.lccezinha.mytravel.database.DataBaseHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.ListActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -27,6 +32,8 @@ public class SpentListActivity extends ListActivity implements
 
 	private List<Map<String, Object>> spents;
 	private String lastDate = "";
+	private DataBaseHelper dataBaseHelper;
+	private SimpleDateFormat dateFormat;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -35,8 +42,11 @@ public class SpentListActivity extends ListActivity implements
 		String[] from = { "date", "description", "value", "category" };
 		int[] to = { R.id.date, R.id.description, R.id.value, R.id.category };
 		
+		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
 		SimpleAdapter adapter = new SimpleAdapter(this, listSpents(), R.layout.list_spent, from, to);
 		adapter.setViewBinder(new SpentViewBinder());
+		
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
 		
@@ -52,35 +62,43 @@ public class SpentListActivity extends ListActivity implements
 	}
 	
 	private List<Map<String, Object>> listSpents(){
+		SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
+		
+		Cursor cursor = db.rawQuery("SELECT _id, travel_id, category, " +
+				"date, description, value, place FROM spents", null);
+		
+		cursor.moveToNext();
+		
 		spents = new ArrayList<Map<String, Object>>();
 		
-		Map<String, Object> item = new HashMap<String, Object>();
-		item.put("date", "03/03/2013");
-		item.put("description", "Hotel");
-		item.put("value", "R$ 41.00");
-		item.put("category", R.color.categoria_hospedagem);
-		spents.add(item);
+		for(int i = 0; i > cursor.getCount(); i++){
+			Map<String, Object> item = new HashMap<String, Object>();
+			
+			String id = cursor.getString(0);
+			String travel_id = cursor.getString(1);
+			String category = cursor.getString(2);
+			long date = cursor.getLong(3);
+			String description = cursor.getString(4);
+			String value = cursor.getString(5);
+			String place = cursor.getString(6);
+			
+			item.put("id", id);
+			item.put("travel_id", travel_id);
+			item.put("category",  category);
+			
+			Date spentDate = new Date(date);
+			String formatedDate = dateFormat.format(spentDate);
+			
+			item.put("date", formatedDate);
+			item.put("description", description);
+			item.put("value", value);
+			item.put("place", place);
+			
+			spents.add(item);
+		}
 		
-		item = new HashMap<String, Object>();
-		item.put("date", "03/03/2013");
-		item.put("description", "Lanche");
-		item.put("value", "R$ 30.00");
-		item.put("category", R.color.categoria_alimentacao);
-		spents.add(item);
-		
-		item = new HashMap<String, Object>();
-		item.put("date", "03/03/2013");
-		item.put("description", "Lanche");
-		item.put("value", "R$ 30.00");
-		item.put("category", R.color.categoria_alimentacao);
-		spents.add(item);
-		
-		item = new HashMap<String, Object>();
-		item.put("date", "05/03/2013");
-		item.put("description", "Lanche");
-		item.put("value", "R$ 15.00");
-		item.put("category", R.color.categoria_alimentacao);
-		spents.add(item);
+		cursor.close();
+		dataBaseHelper.close();
 		
 		return spents;
 	}
@@ -130,5 +148,4 @@ public class SpentListActivity extends ListActivity implements
 		}
 		return super.onContextItemSelected(item);
 	}
-
 }
