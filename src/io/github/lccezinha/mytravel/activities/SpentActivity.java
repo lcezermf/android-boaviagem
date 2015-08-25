@@ -25,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SpentActivity extends Activity {
 	
@@ -36,9 +37,10 @@ public class SpentActivity extends Activity {
 	private EditText description;
 	private EditText place;
 	private Date data;
+	private String travel_destiny;
 	private String travel_id;
-	
 	private DataBaseHelper dataBaseHelper;
+	
 	@Override
 	public void onCreate(Bundle savedInstaceState){
 		super.onCreate(savedInstaceState);
@@ -58,9 +60,10 @@ public class SpentActivity extends Activity {
 		category = (Spinner) findViewById(R.id.category);
 		category.setAdapter(adapter);
 		
-		travel_id = getIntent().getStringExtra(ConstantHelpers.TRAVEL_DESTINY);
+		travel_destiny = getIntent().getStringExtra(ConstantHelpers.TRAVEL_DESTINY);
+		travel_id = getIntent().getStringExtra(ConstantHelpers.TRAVEL_ID);
 		destiny = (TextView) findViewById(R.id.destiny);
-		destiny.setText(travel_id);
+		destiny.setText(travel_destiny);
 		
 		value = (EditText) findViewById(R.id.value);
 		description = (EditText) findViewById(R.id.description);
@@ -80,29 +83,19 @@ public class SpentActivity extends Activity {
 		values.put("description", description.getText().toString());
 		values.put("place", place.getText().toString());
 		values.put("category", category.getSelectedItem().toString());
+		values.put("travel_id", travel_id);
 		
 		SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-		db.insert("spents", null, values);
-	}
-	
-	@Override
-	protected Dialog onCreateDialog(int id){
-		if(R.id.spentDate == id){
-			return new DatePickerDialog(this, listener, year, month, day);
+		long result;
+		
+		result = db.insert("spents", null, values);
+		
+		if(result != -1){
+			Toast.makeText(this, getString(R.string.spent_create), Toast.LENGTH_LONG).show();
+		}else{
+			Toast.makeText(this, getString(R.string.spent_create_error), Toast.LENGTH_LONG).show();
 		}
-		return null;
 	}
-	
-	private OnDateSetListener listener = new OnDateSetListener(){
-		@Override
-		public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth){
-			year  = yearSelected;
-			month = monthOfYear;
-			day   = dayOfMonth;
-			spentDate.setText(day + "/" + (month + 1) + "/" + year);
-			data = createDate(day, month, year);
-		}		
-	};
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,6 +125,25 @@ public class SpentActivity extends Activity {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(year, month, day);
 		return calendar.getTime(); 
+	}
+	
+	private OnDateSetListener listener = new OnDateSetListener(){
+		@Override
+		public void onDateSet(DatePicker view, int yearSelected, int monthOfYear, int dayOfMonth){
+			year  = yearSelected;
+			month = monthOfYear;
+			day   = dayOfMonth;
+			spentDate.setText(day + "/" + (month + 1) + "/" + year);
+			data = createDate(day, month, year);
+		}		
+	};
+	
+	@Override
+	protected Dialog onCreateDialog(int id){
+		if(R.id.spentDate == id){
+			return new DatePickerDialog(this, listener, year, month, day);
+		}
+		return null;
 	}
 	
 }
